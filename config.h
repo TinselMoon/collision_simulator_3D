@@ -8,4 +8,4 @@
 #define CIRCLE_RAD_MAX 10
 #define CIRCLE_RAD_MIN 5
 #define MAX_SPEED 501
-#define TARGET_FPS 144
+#define TARGET_FPS 60

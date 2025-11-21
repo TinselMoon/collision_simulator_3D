@@ -83,16 +83,16 @@ void draw_particles(System *s){
     }
 }
 
-void resolve_collision(Particles *p1, Particles *p2) {
-    double dx = p2->p_pos.x - p1->p_pos.x;
-    double dy = p2->p_pos.y - p1->p_pos.y;
-    double dz = p2->p_pos.z - p1->p_pos.z;
-    double distSq = dx*dx + dy*dy + dz*dz;
-    double dist = sqrt(distSq);
-    if (dist == 0) return;
-    double nx = dx / dist;
-    double ny = dy / dist;
-    double nz = dz / dist;
+double kinect_energy(System *s){
+    double total_energy = 0;
+    for(Particles *p = s->head; p != NULL; p = p->next){
+        double vel = sqrt(p->p_vel.x*p->p_vel.x + p->p_vel.y*p->p_vel.y + p->p_vel.z*p->p_vel.z);
+        total_energy += vel*p->mass/2;
+    }
+    return total_energy;
+}
+
+void resolve_collision(Particles *p1, Particles *p2, double nx, double ny, double nz) {
     double dvx = p1->p_vel.x - p2->p_vel.x;
     double dvy = p1->p_vel.y - p2->p_vel.y;
     double dvz = p1->p_vel.z - p2->p_vel.z;
@@ -136,9 +136,9 @@ void fix_contacts(System *s, Box b){
             p1->p_vel.z = -(p1->p_vel.z);
         }
         for(Particles *p2 = p1->next; p2 != NULL; p2 = p2->next){
-            double dist_x = p1->p_pos.x - p2->p_pos.x;
-            double dist_y = p1->p_pos.y - p2->p_pos.y;
-            double dist_z = p1->p_pos.z - p2->p_pos.z;
+            double dist_x = p2->p_pos.x - p1->p_pos.x;
+            double dist_y = p2->p_pos.y - p1->p_pos.y;
+            double dist_z = p2->p_pos.z - p1->p_pos.z;
             double sqr_dist = dist_x*dist_x + dist_y*dist_y + dist_z*dist_z;
             double sum_radius = p1->radius + p2->radius;
             if(sqr_dist < sum_radius*sum_radius){
@@ -153,15 +153,15 @@ void fix_contacts(System *s, Box b){
                 double norm_x = dist_x/dist;
                 double norm_y = dist_y/dist;
                 double norm_z = dist_z/dist;
-                p1->p_pos.x += norm_x * (overlap * 0.5);
-                p1->p_pos.y += norm_y * (overlap * 0.5);
-                p1->p_pos.z += norm_z * (overlap * 0.5);
-                p2->p_pos.x -= norm_x * (overlap * 0.5);
-                p2->p_pos.y -= norm_y * (overlap * 0.5);
-                p2->p_pos.z -= norm_z * (overlap * 0.5);
+                p1->p_pos.x -= norm_x * (overlap * 0.5);
+                p1->p_pos.y -= norm_y * (overlap * 0.5);
+                p1->p_pos.z -= norm_z * (overlap * 0.5);
+                p2->p_pos.x += norm_x * (overlap * 0.5);
+                p2->p_pos.y += norm_y * (overlap * 0.5);
+                p2->p_pos.z += norm_z * (overlap * 0.5);
 
                 // Update velocities
-                resolve_collision(p1,p2);
+                resolve_collision(p1,p2, norm_x, norm_y, norm_z);
             }
         }
     }

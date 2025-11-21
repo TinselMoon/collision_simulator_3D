@@ -16,40 +16,37 @@ int main(int argc, char **argv){
 
     // Creating camera
     Box caixa = {100, 100, 100};
+
+    // Config camera
     float cameraAngle = 0.0f;
-    float cameraDistance = 200.0f; // Distância da câmera ao centro
+    float cameraDistance = 200.0f;
     Camera camera = { 0 };
-    camera.position = (Vector3){ 0.0f, 100.0f, 100.0f };    // Camera position
-    camera.target = (Vector3){ caixa.x/2, caixa.y/2, caixa.z/2 };      // Camera looking at point
-    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    camera.fovy = 45.0f;                                // Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
-    //int cameraMode = CAMERA_FREE;
+    camera.position = (Vector3){ 0.0f, 100.0f, 100.0f };
+    camera.target = (Vector3){ caixa.x/2, caixa.y/2, caixa.z/2 };
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
+    camera.fovy = 45.0f;
+    camera.projection = CAMERA_PERSPECTIVE;
     camera.position.x = caixa.x/2 + cosf(cameraAngle) * cameraDistance;
-    camera.position.y = caixa.y/2 + 100.0f; // Um pouco acima da caixa
+    camera.position.y = caixa.y/2 + 100.0f;
     camera.position.z = caixa.z/2 + sinf(cameraAngle) * cameraDistance;
     
     for(int i = 0; i < num_particles; i++)
         insert_particle(s, caixa);
 
     InitWindow(screenWidth, screenHeight, "colisions simulator");
-    SetTargetFPS(TARGET_FPS);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(TARGET_FPS); //FPS value on config.h
     double fps;
     ClearBackground(RAYWHITE);
-    //--------------------------------------------------------------------------------------
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+
+    while (!WindowShouldClose())    //Detect close button ESC
     {
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         {
-            // Ajuste a sensibilidade (0.01f) conforme necessário
             cameraAngle += GetMouseDelta().x * 0.01f;
         }
 
-        // Recalcula a posição orbital usando coordenadas polares (apenas eixos X e Z)
         camera.position.x = caixa.x/2 + cosf(cameraAngle) * cameraDistance;
         camera.position.z = caixa.z/2 + sinf(cameraAngle) * cameraDistance;
-        //UpdateCamera(&camera, cameraMode);
         BeginDrawing();
         ClearBackground(RAYWHITE);
         if (IsKeyPressed(KEY_I)){
@@ -71,15 +68,15 @@ int main(int argc, char **argv){
         EndMode3D();
         fps = 1/GetFrameTime();
         DrawText(TextFormat("Number of Particles: %d\n"
+                            "Total kinect energy: %.0f\n"
                             "Press I to insert a particle\n"
                             "Press R to remove a particle\n"
-                            "FPS: %.2f", num_particles, fps), 10, 10, 30, DARKGRAY);
+                            "FPS: %.2f", num_particles, kinect_energy(s), fps), 10, 10, 30, DARKGRAY);
         EndDrawing();
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
-    CloseWindow();        // Close window and OpenGL context
+    CloseWindow();
     destroy(s);
     return 0;
 }
