@@ -21,7 +21,7 @@ typedef struct {
 } Box;
 
 System* create();
-void insert_particle(System *s, int screenWidth, int screenHeight);
+void insert_particle(System *s, Box b);
 void destroy (System *l);
 void draw_particles(System *s);
 void update_pos(System *s);

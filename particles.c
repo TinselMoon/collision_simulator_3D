@@ -41,13 +41,13 @@ void remove_particle(System *s){
     }
 }
 
-void insert_particle(System *s, int screenWidth, int screenHeight){
+void insert_particle(System *s, Box b){
     Particles *p = (Particles *)malloc(sizeof(Particles));
     p->next = NULL;
     p->radius = (rand() % (CIRCLE_RAD_MAX - CIRCLE_RAD_MIN))+CIRCLE_RAD_MIN;
-    p->p_pos.x = rand() % (screenWidth - 2*p->radius) + p->radius;
-    p->p_pos.y = rand() % (screenHeight - 2*p->radius) + p->radius;
-    p->p_pos.z = rand() % (screenHeight - 2*p->radius) + p->radius;
+    p->p_pos.x = rand() % ((int)b.x - 2*p->radius) + p->radius;
+    p->p_pos.y = rand() % ((int)b.y - 2*p->radius) + p->radius;
+    p->p_pos.z = rand() % ((int)b.z - 2*p->radius) + p->radius;
     p->p_vel.x = (-MAX_SPEED/2) + rand() % MAX_SPEED;
     p->p_vel.y = (-MAX_SPEED/2) + rand() % MAX_SPEED;
     p->p_vel.z = (-MAX_SPEED/2) + rand() % MAX_SPEED;
