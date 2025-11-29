@@ -4,7 +4,7 @@
 #endif
 
 double dt = (double)1/TARGET_FPS;
-Color values[] = {DARKGRAY, MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE,
+static const Color values[] = {DARKGRAY, MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE,
                     DARKBROWN, GRAY, RED, GOLD, LIME, BLUE, VIOLET, BROWN,
                     LIGHTGRAY, PINK, YELLOW, GREEN, SKYBLUE, PURPLE, BEIGE};
 
