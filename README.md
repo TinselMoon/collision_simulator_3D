@@ -34,5 +34,5 @@ Para executar o simulador, é necessário fornecer os parâmetros de largura, al
 
 **Exemplo de uso:**
 ```bash
-./colision 800 600 100
+./colision 800 600 10
 ```
