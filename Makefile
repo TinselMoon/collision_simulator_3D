@@ -1,2 +1,2 @@
 all:
-	gcc -o colision colision.c particles.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+	gcc -o collision collision.c particles.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
