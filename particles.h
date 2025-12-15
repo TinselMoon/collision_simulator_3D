@@ -1,3 +1,6 @@
+#ifndef PARTICLES_H
+#define PARTICLES_H
+
 #include "config.h"
 
 typedef struct particle{
@@ -29,4 +32,6 @@ void resolve_collision(Particles *p1, Particles *p2, double nx, double ny, doubl
 void remove_particle(System *s);
 bool is_empty(System *s);
 void fix_contacts(System *s, Box b);
-double kinect_energy(System *s);
+double kinetic_energy(System *s);
+
+#endif

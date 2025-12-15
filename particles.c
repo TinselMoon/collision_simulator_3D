@@ -1,7 +1,4 @@
-#ifndef PARTICLE_H
 #include "particles.h"
-#define PARTICLE_H
-#endif
 
 double dt = (double)1/TARGET_FPS;
 static const Color values[] = {DARKGRAY, MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE,
@@ -83,7 +80,7 @@ void draw_particles(System *s){
     }
 }
 
-double kinect_energy(System *s){
+double kinetic_energy(System *s){
     double total_energy = 0;
     for(Particles *p = s->head; p != NULL; p = p->next){
         //Dividido por 10 mil para não deixar o valor tão elevado

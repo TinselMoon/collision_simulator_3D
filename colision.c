@@ -1,10 +1,7 @@
-#ifndef PARTICLE_H
-#define PARTICLE_H
 #include "particles.h"
-#endif
 
 int main(int argc, char **argv){
-    if(argc < 3){
+    if(argc < 4){
         printf("Error, not enough information\nRun: %s [width] [height] [num of particles]\n", argv[0]);
         exit(0);
     }
@@ -68,10 +65,10 @@ int main(int argc, char **argv){
         EndMode3D();
         fps = 1/GetFrameTime();
         DrawText(TextFormat("Number of Particles: %d\n"
-                            "Total kinect energy: %.0f\n"
+                            "Total kinetic energy: %.0f\n"
                             "Press I to insert a particle\n"
                             "Press R to remove a particle\n"
-                            "FPS: %.2f", num_particles, kinect_energy(s), fps), 10, 10, 30, DARKGRAY);
+                            "FPS: %.2f", num_particles, kinetic_energy(s), fps), 10, 10, 30, DARKGRAY);
         EndDrawing();
         EndDrawing();
     }
