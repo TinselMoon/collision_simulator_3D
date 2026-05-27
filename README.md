@@ -29,10 +29,10 @@ make
 To run the simulator, you must provide the width, height, and number of particles as parameters:
 
 ```bash
-./colision [width] [height] [num particles]
+./collision [width] [height] [num particles]
 ```
 
 **Usage example:**
 ```bash
-./colision 800 600 10
+./collision 800 600 10
 ```
